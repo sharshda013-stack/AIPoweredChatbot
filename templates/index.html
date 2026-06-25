@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}AI Powered Chatbot | Clean Chat UI{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <div class="eyebrow">Flask Chatbot Studio</div>
+        <h1>Clean UI, faster conversations, and a more polished chatbot experience.</h1>
+        <p class="hero-text">
+            This version improves layout, spacing, and interaction flow. It also keeps chat history,
+            supports quick prompts, and is structured so you can add advanced AI features later.
+        </p>
+
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-value">01</span>
+                <span class="stat-label">Minimal layout</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">02</span>
+                <span class="stat-label">Chat history</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">03</span>
+                <span class="stat-label">Deploy ready</span>
+            </div>
+        </div>
+
+        <div class="feature-row">
+            <div class="feature-pill">Responsive</div>
+            <div class="feature-pill">Quick prompts</div>
+            <div class="feature-pill">Session memory</div>
+        </div>
+    </div>
+
+    <div class="chat-panel">
+        <div class="panel-header">
+            <div>
+                <p class="panel-kicker">Assistant</p>
+                <h2>AI Powered Chatbot</h2>
+            </div>
+            <form action="{{ url_for('clear_chat') }}" method="post">
+                <button type="submit" class="ghost-button">Clear chat</button>
+            </form>
+        </div>
+
+        <div class="chat-window" id="chatWindow">
+            {% if chat_history %}
+                {% for message in chat_history %}
+                    <div class="message-row {{ message.role }}">
+                        <div class="message-bubble">
+                            <span class="message-label">{{ "You" if message.role == "user" else "Bot" }}</span>
+                            <p>{{ message.message }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">AI</div>
+                    <h3>Start the conversation</h3>
+                    <p>Try one of the quick prompts or type your own message below.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="prompt-grid">
+            {% for prompt in quick_prompts %}
+                <button type="button" class="prompt-chip" data-prompt="{{ prompt }}">{{ prompt }}</button>
+            {% endfor %}
+        </div>
+
+        <form class="composer" action="{{ url_for('chat') }}" method="post">
+            <input
+                id="messageInput"
+                name="message"
+                type="text"
+                placeholder="Type your message..."
+                autocomplete="off"
+                required
+            >
+            <button type="submit" class="send-button">Send</button>
+        </form>
+
+        <div class="helper-text">
+            Suggested improvements: connect a real AI API, add markdown rendering, store chats in a database, and add user authentication.
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const input = document.getElementById("messageInput");
+    const chips = document.querySelectorAll("[data-prompt]");
+    const chatWindow = document.getElementById("chatWindow");
+
+    chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+            input.value = chip.dataset.prompt;
+            input.focus();
+        });
+    });
+
+    if (chatWindow) {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+</script>
+{% endblock %}
