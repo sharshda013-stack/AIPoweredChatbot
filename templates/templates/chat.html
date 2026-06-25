@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Result</title>
+
+    <style>
+        body{
+            font-family:Arial;
+            background:#f4f4f4;
+        }
+
+        .chat-box{
+            width:500px;
+            margin:50px auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        .user{
+            background:#d1e7ff;
+            padding:10px;
+            border-radius:10px;
+            margin:10px;
+        }
+
+        .bot{
+            background:#d4edda;
+            padding:10px;
+            border-radius:10px;
+            margin:10px;
+        }
+
+        a{
+            text-decoration:none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="chat-box">
+
+    <h2>💬 Chat</h2>
+
+    <div class="user">
+        <b>You:</b> {{ user_message }}
+    </div>
+
+    <div class="bot">
+        <b>Bot:</b> {{ bot_reply }}
+    </div>
+
+    <br>
+
+    <a href="/">⬅ Back to Chat</a>
+
+</div>
+
+</body>
+</html>
